@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:scaled_list/scaled_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    var myColors = [Colors.red[400], Colors.yellow[400], Colors.blue[400]];
 
     circularContainer(double size, IconData icn, String text) {
       return Column(
@@ -38,6 +41,31 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 8),
           Text(text, style: TextStyle(fontSize: 12)),
         ],
+      );
+    }
+
+    bottomCarousels() {
+      return Container(
+        child: CarouselSlider(
+          options: CarouselOptions(
+            height: 200,
+          ),
+          items: [1, 2, 3].map((e) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                  width: width,
+                  margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[800],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text('Carousel #$e'),
+                );
+              },
+            );
+          }).toList(),
+        ),
       );
     }
 
@@ -157,38 +185,16 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w500)),
                   ),
-                  Container(
-                    height: 200,
-                    margin: const EdgeInsets.only(top: 16),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Card(
-                          elevation: 8,
-                          margin: const EdgeInsets.symmetric(horizontal: 6),
-                          child: Container(
-                            width: 120,
-                            color: Colors.red[400],
-                          ),
-                        ),
-                        Card(
-                          elevation: 8,
-                          margin: const EdgeInsets.symmetric(horizontal: 6),
-                          child: Container(
-                            width: 120,
-                            color: Colors.yellow[400],
-                          ),
-                        ),
-                        Card(
-                          elevation: 8,
-                          margin: const EdgeInsets.symmetric(horizontal: 6),
-                          child: Container(
-                            width: 120,
-                            color: Colors.blue[600],
-                          ),
-                        ),
-                      ],
-                    ),
+                  ScaledList(
+                    itemCount: 3,
+                    itemColor: (index) =>
+                        myColors[index % myColors.length] ??
+                        Colors.red.shade400,
+                    itemBuilder: (index, selectedIndex) {
+                      return Container(
+                        height: selectedIndex == index ? 120 : 100,
+                      );
+                    },
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 20),
@@ -439,6 +445,13 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: Text('Checkout Now',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500)),
+                  ),
+                  bottomCarousels(),
                 ],
               ),
             ),
