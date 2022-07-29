@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: size,
             width: size,
-            child: Center(child: Icon(icn)),
+            child: Center(child: Icon(icn, color: Colors.lightBlue[800])),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.person, color: Colors.white60, size: 120)
+                            Icon(Icons.person, color: Colors.white, size: 120)
                           ],
                         ),
                       ],
@@ -178,7 +178,10 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         height: 90,
                         width: 90,
-                        color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
                         child: Icon(Icons.person, size: 72, color: Colors.grey),
                       ),
                       SizedBox(height: 10),
@@ -230,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  margin: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                   height: 200,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
