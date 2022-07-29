@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:scaled_list/scaled_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    var myColors = [Colors.red[400], Colors.yellow[400], Colors.blue[400]];
+    var myColors = [Colors.red[400], Colors.yellow[700], Colors.blue[400]];
 
     circularContainer(double size, IconData icn, String text) {
       return Column(
@@ -48,20 +49,63 @@ class _HomePageState extends State<HomePage> {
       return Container(
         child: CarouselSlider(
           options: CarouselOptions(
-            height: 200,
+            height: 220,
           ),
-          items: [1, 2, 3].map((e) {
+          items: [1, 2].map((e) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
-                  width: width,
-                  margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[800],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text('Carousel #$e'),
-                );
+                    width: width,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[800],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Test Results',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white)),
+                                  Text('Out Now!',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white)),
+                                ],
+                              ),
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: Center(child: Text('Check Now')),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    onPrimary: Colors.blue,
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.person, color: Colors.white60, size: 120)
+                          ],
+                        ),
+                      ],
+                    ));
               },
             );
           }).toList(),
@@ -71,7 +115,7 @@ class _HomePageState extends State<HomePage> {
 
     upperPart() {
       return Container(
-        height: 250,
+        height: height * 0.35,
         width: width,
         color: Colors.lightBlue[800],
         child: Padding(
@@ -169,291 +213,439 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Text('Hello, Afrin!',
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold)),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 16),
-                    child: Text('Your Activity',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500)),
-                  ),
-                  ScaledList(
-                    itemCount: 3,
-                    itemColor: (index) =>
-                        myColors[index % myColors.length] ??
-                        Colors.red.shade400,
-                    itemBuilder: (index, selectedIndex) {
-                      return Container(
-                        height: selectedIndex == index ? 120 : 100,
-                      );
-                    },
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Wednesday, Jun 23',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500)),
-                        Icon(Icons.calendar_month)
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 500,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Container(
-                          height: 100,
-                          // color: Colors.yellow,
-                          margin: const EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            children: [
-                              Column(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Text('Hello, Afrin!',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text('Your Activity',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  height: 200,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Container(
+                        width: width * 0.4,
+                        margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
+                        decoration: BoxDecoration(
+                          color: Colors.red[300],
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 40,
+                              lineWidth: 8,
+                              percent: 0.3,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              center: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text('12/40',
+                                    style: TextStyle(
+                                      color: Colors.red[100],
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                              ),
+                              backgroundColor: Colors.transparent,
+                              progressColor: Colors.red[100],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('10:00 AM'),
-                                  Icon(Icons.qr_code,
-                                      size: 80, color: Colors.teal),
+                                  Text('Attendance',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 5),
+                                  Text('Working hours exceeded by 3 hours',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 10)),
                                 ],
                               ),
-                              Container(
-                                width: width - 120,
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.red[50],
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Basic Physics',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.red[400])),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.location_on_outlined,
-                                            color: Colors.red[400]),
-                                        Text('Physics Building Floor 2, 1A',
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.red[400])),
-                                      ],
-                                    ),
-                                    Stack(
-                                      children: [
-                                        Positioned(
-                                          child: Container(
-                                            height: 16,
-                                            width: 16,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.grey,
-                                            ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: width * 0.4,
+                        margin: const EdgeInsets.fromLTRB(6, 0, 6, 0),
+                        decoration: BoxDecoration(
+                          color: Colors.yellow[700],
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 40,
+                              lineWidth: 8,
+                              percent: 0.3,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              center: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text('30%',
+                                    style: TextStyle(
+                                      color: Colors.amber[800],
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                              ),
+                              backgroundColor: Colors.transparent,
+                              progressColor: Colors.amber[800],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Assignments',
+                                      style: TextStyle(
+                                          color: Colors.yellow[900],
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 5),
+                                  Text('Excellent Results',
+                                      style: TextStyle(
+                                          color: Colors.yellow[200], fontSize: 10)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: width * 0.4,
+                        margin: const EdgeInsets.fromLTRB(6, 0, 0, 0),
+                        decoration: BoxDecoration(
+                          color: Colors.blue[800],
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 40,
+                              lineWidth: 8,
+                              percent: 0.3,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              center: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text('30%',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                              ),
+                              backgroundColor: Colors.transparent,
+                              progressColor: Colors.white,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Attendance',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 5),
+                                  Text('Excellent Attendance',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 10)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Wednesday, Jun 23',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500)),
+                      Icon(Icons.calendar_month)
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  height: 500,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      Container(
+                        height: 100,
+                        // color: Colors.yellow,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text('10:00 AM'),
+                                Icon(Icons.qr_code,
+                                    size: 80, color: Colors.teal),
+                              ],
+                            ),
+                            Container(
+                              width: width - 120,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.red[50],
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Basic Physics',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.red[400])),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.location_on_outlined,
+                                          color: Colors.red[400]),
+                                      Text('Physics Building Floor 2, 1A',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.red[400])),
+                                    ],
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Positioned(
+                                        child: Container(
+                                          height: 16,
+                                          width: 16,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey,
                                           ),
                                         ),
-                                        Positioned(
-                                          child: Container(
-                                            height: 16,
-                                            width: 16,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.blue,
-                                            ),
+                                      ),
+                                      Positioned(
+                                        child: Container(
+                                          height: 16,
+                                          width: 16,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.blue,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: 100,
-                          // color: Colors.yellow,
-                          margin: const EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Text('11:00 AM'),
-                                  Icon(Icons.qr_code,
-                                      size: 80, color: Colors.teal),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                              Container(
-                                width: width - 120,
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue[50],
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Basic Physics',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.blue[400])),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.location_on_outlined,
-                                            color: Colors.blue[400]),
-                                        Text('Physics Building Floor 2, 1A',
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                color: Colors.blue[400])),
-                                      ],
-                                    ),
-                                    Stack(
-                                      children: [
-                                        Positioned(
-                                          child: Container(),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          height: 100,
-                          // color: Colors.yellow,
-                          margin: const EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            children: [
-                              Column(
+                      ),
+                      Container(
+                        height: 100,
+                        // color: Colors.yellow,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text('11:00 AM'),
+                                Icon(Icons.qr_code,
+                                    size: 80, color: Colors.teal),
+                              ],
+                            ),
+                            Container(
+                              width: width - 120,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.blue[50],
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('12:00 PM'),
-                                  Icon(Icons.qr_code,
-                                      size: 80, color: Colors.teal),
+                                  Text('Basic Physics',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.blue[400])),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.location_on_outlined,
+                                          color: Colors.blue[400]),
+                                      Text('Physics Building Floor 2, 1A',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.blue[400])),
+                                    ],
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Positioned(
+                                        child: Container(),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                              Container(
-                                width: width - 120,
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.red[50],
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Basic Physics',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.red[400])),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.location_on_outlined,
-                                            color: Colors.red[400]),
-                                        Text('Physics Building Floor 2, 1A',
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                color: Colors.red[400])),
-                                      ],
-                                    ),
-                                    Stack(
-                                      children: [
-                                        Positioned(
-                                          child: Container(),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          height: 100,
-                          // color: Colors.yellow,
-                          margin: const EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            children: [
-                              Column(
+                      ),
+                      Container(
+                        height: 100,
+                        // color: Colors.yellow,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text('12:00 PM'),
+                                Icon(Icons.qr_code,
+                                    size: 80, color: Colors.teal),
+                              ],
+                            ),
+                            Container(
+                              width: width - 120,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.red[50],
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('01:00 PM'),
-                                  Icon(Icons.qr_code,
-                                      size: 80, color: Colors.teal),
+                                  Text('Basic Physics',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.red[400])),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.location_on_outlined,
+                                          color: Colors.red[400]),
+                                      Text('Physics Building Floor 2, 1A',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.red[400])),
+                                    ],
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Positioned(
+                                        child: Container(),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                              Container(
-                                width: width - 120,
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.green[50],
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Basic Physics',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.green[400])),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.location_on_outlined,
-                                            color: Colors.green[400]),
-                                        Text('Physics Building Floor 2, 1A',
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                color: Colors.green[400])),
-                                      ],
-                                    ),
-                                    Stack(
-                                      children: [
-                                        Positioned(
-                                          child: Container(),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        height: 100,
+                        // color: Colors.yellow,
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text('01:00 PM'),
+                                Icon(Icons.qr_code,
+                                    size: 80, color: Colors.teal),
+                              ],
+                            ),
+                            Container(
+                              width: width - 120,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.green[50],
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Basic Physics',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.green[400])),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.location_on_outlined,
+                                          color: Colors.green[400]),
+                                      Text('Physics Building Floor 2, 1A',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.green[400])),
+                                    ],
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Positioned(
+                                        child: Container(),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: Text('Checkout Now',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500)),
-                  ),
-                  bottomCarousels(),
-                ],
-              ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  child: Text('Checkout Now',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                ),
+                bottomCarousels(),
+              ],
             ),
           ],
         ),
